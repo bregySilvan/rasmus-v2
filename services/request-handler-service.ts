@@ -4,12 +4,20 @@ import * as _ from 'lodash';
 import { BASE64 } from '../test';
 import { PLAIN_JS_FUNCTIONS_UI } from '../client/functions';
 import { UIBuilder } from '../classes/ui-builder';
+import { toBase64 } from '../utils/base64';
+import { IConfig } from '../settings/config.interface';
+import { listFiles } from '../utils/fs-extra';
+import { SERVER_PICTURES_LOCATION } from '../settings/server-config';
 
 export class RequestHandlerService {
     
     private uiFunctions = PLAIN_JS_FUNCTIONS_UI;
 
-    public constructor() {
+    private serverConfig = {
+        serverPictures: SERVER_PICTURES_LOCATION
+    }
+
+    public constructor(private config: IConfig) {
  
     }
 
@@ -20,11 +28,15 @@ export class RequestHandlerService {
     }
 
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
-        var pictures = [BASE64];
-        res.status(200);
-        res.send(JSON.stringify(pictures));
-        res.end();
-        next();
+        listFiles(this.config.customPicturesLocation)
+        var picture = './pictures/sponge.gif';
+        toBase64(picture, (encoded: string) => {
+            var pictures = [encoded];
+            res.status(200);
+            res.send(JSON.stringify(pictures));
+            res.end();
+            next();
+        });
     }
 
 

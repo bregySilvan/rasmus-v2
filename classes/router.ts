@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { RequestHandlerService } from '../services/request-handler-service';
 import { LOCATIONS } from '../settings/locations';
+import { IConfig } from '../settings/config.interface';
 
 export class CustomRouter {
 
@@ -9,10 +10,10 @@ export class CustomRouter {
     private _activeLocations: string[];
     private locations = LOCATIONS;
 
-    constructor(private _app?: express.Express) {
-        this._app = _app || express();
+    constructor(private _app: express.Express, private config: IConfig) {
+        this._app = _app;
         this._router = express.Router();
-        this._requestHandler = new RequestHandlerService();
+        this._requestHandler = new RequestHandlerService(this.config);
         this._activeLocations = [];
         this._activateRoutes();
         this._app.use(this._router);

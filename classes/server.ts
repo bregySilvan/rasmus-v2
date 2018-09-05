@@ -11,7 +11,7 @@ export class Server {
     public start(config: IConfig) {
         let usedPort = config.defaultPort || 55555;
         var app = express();
-        var customRouter: CustomRouter = new CustomRouter(app);
+        var customRouter: CustomRouter = new CustomRouter(app, config);
         app.listen(usedPort, () => {
             console.log(`listening on port ${usedPort}`);
             console.log(`request url: http://localhost:${usedPort}`);
@@ -20,5 +20,9 @@ export class Server {
                 console.log(location);
             });
         });
+    }
+
+    private setup() {
+        
     }
 }
