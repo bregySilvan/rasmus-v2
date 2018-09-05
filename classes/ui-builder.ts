@@ -18,20 +18,17 @@ export class UIBuilder {
         return this.appendTag('head', closing);
     }
 
-    body(closing: boolean = false) {
-        return this.appendTag('body', closing);
+    fullBody(): UIBuilder {
+        this.appendTag('body', false);
+        this.append(`<canvas id="picture"></canvas>`);
+        return this.appendTag('body', true);
     }
 
-    bodyContents(): UIBuilder {
-        return this.append(`<canvas id="picture"></canvas>`);
-    }
-
-    javascript() {
+    fullJs() {
         this.appendTag('script', false);
-        this.append('var images = { };')
-        this.append(`var canvas = document.getElementById('picture');`);
-        this.append(`var ctx = canvas.getContext("2d");`);
-        this.appendAll(_.functions(this.functions).map(f => ''+this.functions[f]));
+        this.append('images = { };');
+        this.appendAll(_.functions(this.functions)
+            .map(f => this.sanitiseFunction(''+this.functions[f], f)));
         return this.appendTag('script', true);
     }
 
@@ -54,15 +51,12 @@ export class UIBuilder {
         return this.append(tagStart + tagName + '>');
     }
 
-    private constructor() {
+    sanitiseFunction(func: string, name: string) {
+        let plainFunctionBody = func.substring(func.indexOf('('));
+        return 'function '+name+plainFunctionBody;
+    }
 
+    private constructor() {
+        // private constructor for builder pattern!
     }
 }
-
-/*
-
-var canvas = document.getElementById("c");
-var ctx = canvas.getContext("2d");
-
-getActualImages();
-*/

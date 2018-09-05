@@ -22,7 +22,7 @@ export class RequestHandlerService {
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
         var pictures = [BASE64];
         res.status(200);
-        res.json(pictures);
+        res.send(JSON.stringify(pictures));
         res.end();
         next();
     }
@@ -34,20 +34,14 @@ export class RequestHandlerService {
 
     private getUI(): string {
 
-        let functions = _.functions(this.uiFunctions)
-         // convert Function object to string with this simple trick
-            .map(f => ''+this.uiFunctions[f]);
-
         return UIBuilder.build()
             .html()
             .head()
-            .js()
-            .appendAll(functions)
-            .js(true)
+            .fullJs()
             .head(true)
+            .fullBody()
             .html(true)
             .toString();
-
     }
 }
 
