@@ -1,11 +1,15 @@
 
 var base64Img = require('base64-img');
 
-export function toBase64(path: string, cb: (encoded: string) => void): void {
-    base64Img.base64(path, function(err, data) {
-        if(err)  {
-            console.log(err);
-        }
-        return cb(data || '');
-    });
+export async function toBase64(path: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        base64Img.base64(path, function(err, data) {
+            if(err)  {
+                console.log(err);
+                return resolve('');
+            }
+            resolve(data);
+        });
+    })
+    
 }

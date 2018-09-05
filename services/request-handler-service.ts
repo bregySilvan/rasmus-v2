@@ -5,20 +5,15 @@ import { BASE64 } from '../test';
 import { PLAIN_JS_FUNCTIONS_UI } from '../client/functions';
 import { UIBuilder } from '../classes/ui-builder';
 import { toBase64 } from '../utils/base64';
-import { IConfig } from '../settings/config.interface';
+import { IServerConfig } from '../settings/server-config.interface';
 import { listFiles } from '../utils/fs-extra';
-import { SERVER_PICTURES_LOCATION } from '../settings/server-config';
 
 export class RequestHandlerService {
     
     private uiFunctions = PLAIN_JS_FUNCTIONS_UI;
 
-    private serverConfig = {
-        serverPictures: SERVER_PICTURES_LOCATION
-    }
-
-    public constructor(private config: IConfig) {
- 
+    public constructor(private config: IServerConfig) {
+       
     }
 
     public onGetShow(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -28,15 +23,15 @@ export class RequestHandlerService {
     }
 
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
-        listFiles(this.config.customPicturesLocation)
-        var picture = './pictures/sponge.gif';
-        toBase64(picture, (encoded: string) => {
-            var pictures = [encoded];
-            res.status(200);
-            res.send(JSON.stringify(pictures));
-            res.end();
-            next();
-        });
+        let location = this.config.serverPicturesLocation+'/';
+        listFiles(location)
+            .then((pics: string[]) => Promise.all(pics.map(pic => toBase64(location+pic))))
+            .then((encodedPics: string[]) => {
+                res.status(200);
+                res.send(JSON.stringify(encodedPics));
+                res.end();
+                next();
+            });
     }
 
 

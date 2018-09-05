@@ -1,7 +1,7 @@
-import { IConfig } from './settings/config.interface';
+import { IServerConfig } from './settings/server-config.interface';
+import { IUserConfig } from './user-config.interface';
 
-export const USER_CONFIG: IConfig = {
+export const USER_CONFIG: IUserConfig = {
     customPicturesLocation: 'D:/pictures',
-    localAddress: '192.168.1.254',
-    defaultPort: 5001
+    port: 5001
 };

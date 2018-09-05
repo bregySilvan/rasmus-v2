@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { CustomRouter } from './router';
-import { IConfig } from '../settings/config.interface';
+import { IServerConfig } from '../settings/server-config.interface';
+import { IConfig } from '../settings/config';
 
 export class Server {
 
@@ -9,7 +10,7 @@ export class Server {
     }
 
     public start(config: IConfig) {
-        let usedPort = config.defaultPort || 55555;
+        let usedPort = config.port || 55555;
         var app = express();
         var customRouter: CustomRouter = new CustomRouter(app, config);
         app.listen(usedPort, () => {
