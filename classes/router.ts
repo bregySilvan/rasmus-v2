@@ -1,6 +1,5 @@
 import * as express from 'express';
 import { RequestHandlerService } from '../services/request-handler-service';
-import { DataService } from '../services/data-service';
 import { LOCATIONS } from '../settings/locations';
 
 export class CustomRouter {
@@ -25,9 +24,8 @@ export class CustomRouter {
 
     private _activateRoutes() {
 
-        // @todo: create correct handler function in requesthandler
-        this._addRoute(LOCATIONS.show, 'get', this._requestHandler.onPostElements);
-        this._addRoute(LOCATIONS.show, 'get', this._requestHandler.onPostElements);
+        this._addRoute(LOCATIONS.pictures, 'get', this._requestHandler.onGetPictures);
+        this._addRoute(LOCATIONS.show, 'get', this._requestHandler.onGetShow);
         
     }
 

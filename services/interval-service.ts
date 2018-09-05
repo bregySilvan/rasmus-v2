@@ -1,13 +1,13 @@
 import { createId } from '../utils/id';
 
+const INFINITE_EXECUTIONS = -1;
 
 export class IntervalService {
 
     private jobs: { [key: string]: NodeJS.Timer }
 
-    public start(fn: Function, interval: number, executions: number = -1): string {
+    public start(fn: Function, interval: number, executions: number = INFINITE_EXECUTIONS): string {
         let job: NodeJS.Timer;
-        let jobFn: Function;
         if (executions > 0) {
             job = setInterval(() => --executions < 1 ? clearInterval(job) : fn(), interval);
         } else {
@@ -29,6 +29,4 @@ export class IntervalService {
         this.jobs[id] = job;
         return id;
     }
-
-
 }
