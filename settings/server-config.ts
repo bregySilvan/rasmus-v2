@@ -6,9 +6,10 @@ export const SERVER_CONFIG: IServerConfig = {
         pictures: '/pictures',
         config: '/config'
     },
-    localAddress: '192.168.1.254',
-    port: 5001,
+    serverAddress: '192.168.1.254',
+    serverPort: 5001,
     serverPicturesLocation: './pictures',
     pictureElementId: 'picture',
-    showStartDelay: 3000
+    showStartDelay: 1500,
+    reloadPictureTimeMs: 12 * 1000
 };

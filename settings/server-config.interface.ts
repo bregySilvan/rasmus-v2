@@ -10,9 +10,10 @@ export interface IServerConfig {
     locations: ILocationMap;
     pictureElementId: string;
     serverPicturesLocation: string;
-    localAddress: string;
-    port: number;
+    serverAddress: string;
+    serverPort: number;
     showStartDelay: number;
+    reloadPictureTimeMs: number;
 }
 
 

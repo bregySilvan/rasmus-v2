@@ -30,11 +30,17 @@ export class UIBuilder {
         return this.appendTag('script', isClosingTag);
     }
 
+    // this function holds all javascript the client needs on the first request as hardcoded javascript.
+    // the client is only responsible for showing pictures and in plain javascript.
     jsCode(): UIBuilder {
         this.append('var images = [];\n');
         this.append('var currentIndex = 0;\n');
         this.append('var isLoading = false;\n')
-        this.append(`var config = { };\n`);
+        this.append(`var config = {\n
+            serverAddress: "${this.config.serverAddress}",\n
+            serverPort: ${this.config.serverPort},\n
+            locations: { config: '/config' }\n
+        };\n`);
         this.appendAll(_.functions(this.functions)
             .map(f => this.sanitiseFunction('' + this.functions[f], f)));
         // start diashow show after delay 
@@ -66,6 +72,8 @@ export class UIBuilder {
         return this.append(fullStartTag + '>');
     }
 
+    // make "function() { }" to "function foo() { }"
+    // representation of functions is without its name.
     sanitiseFunction(func: string, name: string): string {
         let plainFunctionBody = func.substring(func.indexOf('('));
         return 'function ' + name + plainFunctionBody;

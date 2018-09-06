@@ -16,29 +16,28 @@ export class RequestHandlerService {
 
     }
 
-    public onGetShow(req: express.Request, res: express.Response, next: express.NextFunction) {
+    private isSuccess(res: express.Response, next: express.NextFunction, payload: any) {
         res.status(200);
-        res.send(this.getUI());
+        if (payload) {
+            res.send(payload);
+        }
         res.end();
+        next();
+    }
+
+    public onGetShow(req: express.Request, res: express.Response, next: express.NextFunction) {
+        this.isSuccess(res, next, this.getUI());
     }
 
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
         let location = this.config.serverPicturesLocation + '/';
         listFiles(location)
             .then((pics: string[]) => Promise.all(pics.map(pic => toBase64(location + pic))))
-            .then((encodedPics: string[]) => {
-                res.status(200);
-                res.send(JSON.stringify(encodedPics));
-                res.end();
-                next();
-            });
+            .then((encodedPics: string[]) => this.isSuccess(res, next, JSON.stringify(encodedPics)));
     }
 
     public onGetConfig(req: express.Request, res: express.Response, next: express.NextFunction) {
-        console.log('getting config..');
-        res.status(200);
-        res.send(JSON.stringify(this.config));
-        res.end();
+        this.isSuccess(res, next, JSON.stringify(this.config));
     }
 
     private getUI(): string {

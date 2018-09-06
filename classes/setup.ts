@@ -1,13 +1,11 @@
 import { IConfig } from '../settings/config.interface';
 import { copyFile, listFiles, removeSync, mkdirSync, existsSync } from '../utils/fs-extra';
 
-
 export class Setup {
 
     public start(): void {
-        // clear old pictures.
-        removeSync(destFolder);
-        mkdirSync(destFolder);
+        // remove old pictures.
+        this.clearServerPictures();
         this.copyCustomFiles();
     }
 
