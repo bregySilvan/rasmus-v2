@@ -8,7 +8,7 @@ import { IServerConfig } from '../settings/server-config.interface';
 import { listFiles } from '../utils/fs-extra';
 import { IConfig } from '../settings/config.interface';
 
-export class RequestHandlerService {
+export class RequestHandler {
 
     private uiFunctions = PLAIN_JS_FUNCTIONS_UI;
 

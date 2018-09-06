@@ -1,17 +1,17 @@
 import * as express from 'express';
-import { RequestHandlerService } from '../services/request-handler-service';
+import { RequestHandler } from '../services/request-handler';
 import { IConfig } from '../settings/config.interface';
 
 export class CustomRouter {
 
     private _router: express.Router;
-    private _requestHandler: RequestHandlerService;
+    private _requestHandler: RequestHandler;
     private _activeLocations: string[];
 
     constructor(private _app: express.Express, private config: IConfig) {
         this._app = _app;
         this._router = express.Router();
-        this._requestHandler = new RequestHandlerService(this.config);
+        this._requestHandler = new RequestHandler(this.config);
         this._activeLocations = [];
         this._activateRoutes();
         this._app.use(this._router);

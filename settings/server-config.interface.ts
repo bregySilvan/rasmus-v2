@@ -15,5 +15,3 @@ export interface IServerConfig {
     showStartDelay: number;
     reloadPictureTimeMs: number;
 }
-
-

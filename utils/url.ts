@@ -6,5 +6,5 @@ export function httpRequest(protocol: 'http' | 'https', address: string, port: n
 }
 
 export function serverRequest(config: IConfig, location: string) {
-    return httpRequest('http', config.serverAddress, config.port, location);
+    return httpRequest('http', config.serverAddress, config.serverPort, location);
 }

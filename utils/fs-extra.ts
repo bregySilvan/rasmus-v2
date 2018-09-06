@@ -35,3 +35,7 @@ export function mkdirSync(dir: string) {
 export function existsSync(file: string) {
     return fs.existsSync(file);
 }
+
+export function createWriteStream(file: string) {
+    return fs.createWriteStream(file);
+}

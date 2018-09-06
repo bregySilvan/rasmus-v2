@@ -9,12 +9,11 @@ declare var config: IConfig;
 export const PLAIN_JS_FUNCTIONS_UI = {
     displayImage(base64) {
 
-        //  var canvas = document.getElementById(config.pictureElementId);
-        var canvas = document.getElementById('picture');
+        var canvas = document.getElementById(config.pictureElementId);
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        var ctx = canvas.getContext("2d");
+        var ctx = canvas.getContext('2d');
 
         var image = new Image();
         image.onload = function () {
@@ -36,7 +35,7 @@ export const PLAIN_JS_FUNCTIONS_UI = {
                 }
             }
         }
-        Http.open("GET", url, true);
+        Http.open('GET', url, true);
         Http.send(null);
     },
 
@@ -50,7 +49,7 @@ export const PLAIN_JS_FUNCTIONS_UI = {
         serverRequest(config.locations.config, res => {
             if (!res) {
                 alert('program crashed. Config could not be loaded. Please refresh page..');
-                throw 'REQUESTING http://192.168.1.254:5001/config FAILED DUE TO AN UNKNOWN ERROR';
+                throw `REQUESTING http://${config.serverAddress}:${config.serverPort}${config.locations.config} FAILED DUE TO AN UNKNOWN ERROR`;
             }
             callback(res);
         });

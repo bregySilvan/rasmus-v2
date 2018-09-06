@@ -4,7 +4,7 @@ const INFINITE_EXECUTIONS = -1;
 
 export class IntervalService {
 
-    private jobs: { [key: string]: NodeJS.Timer }
+    private jobs: { [key: string]: NodeJS.Timer };
 
     public start(fn: Function, interval: number, executions: number = INFINITE_EXECUTIONS): string {
         let job: NodeJS.Timer;

@@ -11,13 +11,13 @@ export class Server {
     }
 
     public start(config: IConfig) {
-        let usedPort = config.port || 55555;
+        let port = config.serverPort;
         var app = express();
         var customRouter: CustomRouter = new CustomRouter(app, config);
         new Setup(config).start();
-        app.listen(usedPort, () => {
-            console.log(`listening on port ${usedPort}`);
-            console.log(`request url: http://localhost:${usedPort}`);
+        app.listen(port, () => {
+            console.log(`listening on port ${port}`);
+            console.log(`request url: http://${config.serverAddress}:${port}`);
             console.log('## active locations');
             customRouter.activeLocations.sort().forEach((location: string) => {
                 console.log(location);

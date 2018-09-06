@@ -1,0 +1,41 @@
+
+
+
+	
+	jobs
+	
+		- create iobject to store jobs
+		
+		-a job takes informatoin and some specific function.
+		A job can be executed. It sends a request to a page and gets its contents.
+		The custom function extracts a picture url. The universal picture crawler holds
+		some functions for extracting imageUrls from img tags. The job specific implementation
+		is responsible for extracting a little part of the whole html page which should contain the img.
+		Cheers:
+		
+		
+		the jobs are managed and started by 'Setup' class
+		Classes::
+		
+		PicCrawler {
+			-IntervalService
+			+startJob(job: Job);
+			
+		}
+		
+		Parser {
+			// extracts all urls within <img> tags and which end with .jpg, .png etc
+			extractImageUrl(): string
+		}
+		
+		Request {
+			get() 
+		}
+		
+		
+		class {
+			url: string;
+			
+		}
+		
+		
