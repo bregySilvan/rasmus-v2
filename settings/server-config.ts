@@ -10,6 +10,5 @@ export const SERVER_CONFIG: IServerConfig = {
     port: 5001,
     serverPicturesLocation: './pictures',
     pictureElementId: 'picture',
-    publicFilesLocation: 'public/',
     showStartDelay: 3000
 };

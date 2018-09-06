@@ -2,12 +2,8 @@
 import * as fs from 'fs-extra';
 import { resolve } from 'dns';
 
-export function copyFile(sourceFile: string, newFile: string): void {
-    // Async with promises:
-    fs.copy(sourceFile, newFile)
-        .then(() => { })
-        .catch(err => console.error(err))
-
+export async function copyFile(sourceFile: string, newFile: string): Promise<void> {
+    return fs.copy(sourceFile, newFile);
 }
 
 export async function listFiles(directory: string): Promise<string[]> {
@@ -26,4 +22,16 @@ export function writeFile(file: string, contents: string) {
     fs.writeFile(file, contents, (err) => {
         if(err) console.error(err);
     });
+}
+
+export function removeSync(dir: string) {
+    return fs.removeSync(dir);
+}
+
+export function mkdirSync(dir: string) {
+    return fs.mkdirSync(dir);
+}
+
+export function existsSync(file: string) {
+    return fs.existsSync(file);
 }

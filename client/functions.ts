@@ -50,7 +50,8 @@ export const PLAIN_JS_FUNCTIONS_UI = {
         if (++currentIndex > images.length - 1) {
             currentIndex = 0;
         }
-        displayImage(images[currentIndex])
+        if(!isLoading)
+            displayImage(images[currentIndex])
     },
 
     loadImages() {

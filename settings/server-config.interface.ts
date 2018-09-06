@@ -12,7 +12,6 @@ export interface IServerConfig {
     serverPicturesLocation: string;
     localAddress: string;
     port: number;
-    publicFilesLocation: string;
     showStartDelay: number;
 }
 
