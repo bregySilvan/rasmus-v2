@@ -21,3 +21,9 @@ export async function listFiles(directory: string): Promise<string[]> {
         })
     });
 }
+
+export function writeFile(file: string, contents: string) {
+    fs.writeFile(file, contents, (err) => {
+        if(err) console.error(err);
+    });
+}

@@ -25,6 +25,7 @@ export class CustomRouter {
         let locations = this.config.locations;
         this._addRoute(locations.pictures, 'get', this._requestHandler.onGetPictures);
         this._addRoute(locations.show, 'get', this._requestHandler.onGetShow);
+        this._addRoute(locations.config, 'get', this._requestHandler.onGetConfig)
         
     }
 

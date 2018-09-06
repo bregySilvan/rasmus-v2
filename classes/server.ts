@@ -2,6 +2,7 @@ import * as express from 'express';
 import { CustomRouter } from './router';
 import { IServerConfig } from '../settings/server-config.interface';
 import { IConfig } from '../settings/config.interface';
+import { Setup } from './setup';
 
 export class Server {
 
@@ -13,6 +14,7 @@ export class Server {
         let usedPort = config.port || 55555;
         var app = express();
         var customRouter: CustomRouter = new CustomRouter(app, config);
+        new Setup(config).start();
         app.listen(usedPort, () => {
             console.log(`listening on port ${usedPort}`);
             console.log(`request url: http://localhost:${usedPort}`);
@@ -22,8 +24,5 @@ export class Server {
             });
         });
     }
-
-    private setup() {
-        
-    }
+    
 }

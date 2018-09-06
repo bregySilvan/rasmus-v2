@@ -1,7 +1,7 @@
 import { IConfig } from '../settings/config.interface';
 
 // variables used in functions.
-declare var Image, XMLHttpRequest, document, window, displayImage, getActualImages: any;
+declare var Image, XMLHttpRequest, displayImage, currentIndex, images, document, window, loadImages, isLoading, loadConfig, displayNextImage, httpRequest: any;
 declare var config: IConfig;
 
 // plain js functions which are sent as text to the client. The client holds only the logic to switch and reload 
@@ -9,10 +9,7 @@ declare var config: IConfig;
 export const PLAIN_JS_FUNCTIONS_UI = {
     displayImage(base64) {
 
-        console.log('images received: ', base64);
-        base64 = base64[0];
-
-      //  var canvas = document.getElementById(config.pictureElementId);
+        //  var canvas = document.getElementById(config.pictureElementId);
         var canvas = document.getElementById('picture');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -26,29 +23,56 @@ export const PLAIN_JS_FUNCTIONS_UI = {
         image.src = base64;
     },
 
-    getActualImages() {
-
+    httpRequest(url, callback) {
         const Http = new XMLHttpRequest();
         const href = window.location.href;
         const domain = href.substring(0, href.lastIndexOf('/'));
 
-      //  const url = `http://${config.localAddress}:${config.port}${config.locations.pictures}`;
-        const url = 'http://192.168.1.254:5001/pictures';
+        // const url = `http://${config.localAddress}:${config.port}${config.locations.pictures}`;
+        // const url = 'http://192.168.1.254:5001/pictures';
         Http.onreadystatechange = (e) => {
             if (e.target.readyState == 4 && e.target.status == 200) {
-                displayImage(JSON.parse(Http.responseText));
+                callback(JSON.parse(Http.responseText));
             }
         }
         Http.open("GET", url);
         Http.send();
     },
 
-    startShow() {
-        // show started
-        getActualImages();
-    
+    displayNextImage() {
+        if (isLoading) {
+            return;
+        }
+        if (images.length === 0) {
+            console.error('error, no images loaded. SO no pic can be displayed right? SHIT..! SHOULD NOT HAPPEN');
+            return;
+        }
+        if (++currentIndex > images.length - 1) {
+            currentIndex = 0;
+        }
+        displayImage(images[currentIndex])
     },
+
+    loadImages() {
+        isLoading = true;
+        const url = 'http://192.168.1.254:5001/pictures';
+        httpRequest(url, imgs => {
+            images = imgs;
+            isLoading = false;
+        });
+    },
+
+    loadConfig(callback) {
+        const url = 'http://192.168.1.254:5001/config';
+        httpRequest(url, callback);
+    },
+
+    startShow() {
+        loadConfig(res => {
+            config = res;
+            loadImages();
+            setInterval(() => loadImages(), 23 * 1000);
+            setInterval(() => displayNextImage(), 7000);
+        });
+    }
 }
-
-//    setTimeout(() => PLAIN_JS_FUNCTIONS_UI.getActualImages(), 4000);
-

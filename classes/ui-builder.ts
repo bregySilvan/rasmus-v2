@@ -21,41 +21,54 @@ export class UIBuilder {
 
     fullBody(): UIBuilder {
         this.appendTag('body', false);
-        this.append(`<canvas id="${this.config.pictureElementId}"></canvas>`);
+        this.appendTag('canvas', false, { id: this.config.pictureElementId });
+        this.appendTag('canvas', true);
         return this.appendTag('body', true);
     }
 
-    fullJs() {
-        this.appendTag('script', false);
-        this.append('var images = { };');
-        this.appendAll(_.functions(this.functions)
-            .map(f => this.sanitiseFunction(''+this.functions[f], f)));
-        // functions which executes itself after 4 seconds for starting show
-        this.append('(function() { setTimeout(function() { startShow(); }, 4000) })()');
-        return this.appendTag('script', true);
+    jsTag(isClosingTag: boolean = false): UIBuilder {
+        return this.appendTag('script', isClosingTag);
     }
+
+    jsCode(): UIBuilder {
+        this.append('var images = [];\n');
+        this.append('var currentIndex = 0;\n');
+        this.append('var isLoading = false;\n')
+        this.append(`var config = { };\n`);
+        this.appendAll(_.functions(this.functions)
+            .map(f => this.sanitiseFunction('' + this.functions[f], f)));
+        // start diashow show after delay 
+        return this.append(`setTimeout(function() { startShow(); }, ${this.config.showStartDelay});`);
+    }
+
     toString() {
         return this.contents;
     }
 
-    append(text: string) {
+    append(text: string): UIBuilder {
         this.contents += text;
         return this;
     }
 
-    appendAll(data: string[]) {
+    appendAll(data: string[]): UIBuilder {
         data.forEach(d => this.append(d));
         return this;
     }
 
-    appendTag(tagName: string, isClosingTag: boolean) {
-        let tagStart = isClosingTag ? '</' : '<';
-        return this.append(tagStart + tagName + '>');
+    appendTag(tagName: string, isClosingTag: boolean, propertys: { [key: string]: string } = {}): UIBuilder {
+        let fullStartTag;
+        if (!isClosingTag) {
+            fullStartTag = '<' + tagName;
+            Object.keys(propertys).forEach(key => fullStartTag += ` ${key}="${propertys[key]}"`);
+        } else {
+            fullStartTag = '</' + tagName;
+        }
+        return this.append(fullStartTag + '>');
     }
 
-    sanitiseFunction(func: string, name: string) {
+    sanitiseFunction(func: string, name: string): string {
         let plainFunctionBody = func.substring(func.indexOf('('));
-        return 'function '+name+plainFunctionBody;
+        return 'function ' + name + plainFunctionBody;
     }
 
     private constructor(private config: IConfig) {

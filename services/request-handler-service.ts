@@ -9,11 +9,11 @@ import { listFiles } from '../utils/fs-extra';
 import { IConfig } from '../settings/config.interface';
 
 export class RequestHandlerService {
-    
+
     private uiFunctions = PLAIN_JS_FUNCTIONS_UI;
 
     public constructor(private config: IConfig) {
-       
+
     }
 
     public onGetShow(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -23,9 +23,9 @@ export class RequestHandlerService {
     }
 
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
-        let location = this.config.serverPicturesLocation+'/';
+        let location = this.config.serverPicturesLocation + '/';
         listFiles(location)
-            .then((pics: string[]) => Promise.all(pics.map(pic => toBase64(location+pic))))
+            .then((pics: string[]) => Promise.all(pics.map(pic => toBase64(location + pic))))
             .then((encodedPics: string[]) => {
                 res.status(200);
                 res.send(JSON.stringify(encodedPics));
@@ -34,9 +34,11 @@ export class RequestHandlerService {
             });
     }
 
-
-    private _respond(req: express.Request, res: express.Response, next: express.NextFunction) {
- 
+    public onGetConfig(req: express.Request, res: express.Response, next: express.NextFunction) {
+        console.log('getting config..');
+        res.status(200);
+        res.send(JSON.stringify(this.config));
+        res.end();
     }
 
     private getUI(): string {
@@ -44,7 +46,9 @@ export class RequestHandlerService {
         return UIBuilder.build(this.config)
             .html()
             .head()
-            .fullJs()
+            .jsTag()
+            .jsCode()
+            .jsTag(true)
             .head(true)
             .fullBody()
             .html(true)

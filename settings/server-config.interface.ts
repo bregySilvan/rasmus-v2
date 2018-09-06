@@ -3,6 +3,7 @@ import { IUserConfig } from '../user-config.interface';
 export interface ILocationMap {
     show: '/show';
     pictures: '/pictures';
+    config: '/config'
 }
 
 export interface IServerConfig {
@@ -11,6 +12,8 @@ export interface IServerConfig {
     serverPicturesLocation: string;
     localAddress: string;
     port: number;
+    publicFilesLocation: string;
+    showStartDelay: number;
 }
 
 
