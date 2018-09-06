@@ -1,37 +1,39 @@
 import { PLAIN_JS_FUNCTIONS_UI } from '../client/functions';
 import * as _ from 'lodash';
+import { IConfig } from '../settings/config.interface';
 
 export class UIBuilder {
 
     private contents = '';
     private functions = PLAIN_JS_FUNCTIONS_UI;
 
-    static build(): UIBuilder {
-        return new UIBuilder();
+    static build(config: IConfig): UIBuilder {
+        return new UIBuilder(config);
     }
 
-    html(closing: boolean = false): UIBuilder {
-        return this.appendTag('html', closing);
+    html(isClosingTag: boolean = false): UIBuilder {
+        return this.appendTag('html', isClosingTag);
     }
 
-    head(closing: boolean = false): UIBuilder {
-        return this.appendTag('head', closing);
+    head(isClosingTag: boolean = false): UIBuilder {
+        return this.appendTag('head', isClosingTag);
     }
 
     fullBody(): UIBuilder {
         this.appendTag('body', false);
-        this.append(`<canvas id="picture"></canvas>`);
+        this.append(`<canvas id="${this.config.pictureElementId}"></canvas>`);
         return this.appendTag('body', true);
     }
 
     fullJs() {
         this.appendTag('script', false);
-        this.append('images = { };');
+        this.append('var images = { };');
         this.appendAll(_.functions(this.functions)
             .map(f => this.sanitiseFunction(''+this.functions[f], f)));
+        // functions which executes itself after 4 seconds for starting show
+        this.append('(function() { setTimeout(function() { startShow(); }, 4000) })()');
         return this.appendTag('script', true);
     }
-
     toString() {
         return this.contents;
     }
@@ -46,8 +48,8 @@ export class UIBuilder {
         return this;
     }
 
-    appendTag(tagName: string, closing: boolean) {
-        let tagStart = closing ? '</' : '<';
+    appendTag(tagName: string, isClosingTag: boolean) {
+        let tagStart = isClosingTag ? '</' : '<';
         return this.append(tagStart + tagName + '>');
     }
 
@@ -56,7 +58,7 @@ export class UIBuilder {
         return 'function '+name+plainFunctionBody;
     }
 
-    private constructor() {
+    private constructor(private config: IConfig) {
         // private constructor for builder pattern!
     }
 }

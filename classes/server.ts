@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { CustomRouter } from './router';
 import { IServerConfig } from '../settings/server-config.interface';
-import { IConfig } from '../settings/config';
+import { IConfig } from '../settings/config.interface';
 
 export class Server {
 

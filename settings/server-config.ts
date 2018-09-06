@@ -7,5 +7,6 @@ export const SERVER_CONFIG: IServerConfig = {
     },
     localAddress: '192.168.1.254',
     port: 5001,
-    serverPicturesLocation: './pictures'
+    serverPicturesLocation: './pictures',
+    pictureElementId: 'picture'
 };
