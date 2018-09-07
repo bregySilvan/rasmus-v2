@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <script>
+        var images = [];
+        var currentIndex = 0;
+        var isLoading = false;
+        var config = {
+            serverAddress: '{{config.serverAddress}}',
+            serverPort: '{{config.serverPort}}',
+            locations: '{{config.}}
+        }
+        this.append('var images = [];\n');
+        this.append('var currentIndex = 0;\n');
+        this.append('var isLoading = false;\n')
+        this.append(
+            `var config = {\n
+            serverAddress: "${this.config.serverAddress}",\n
+            serverPort: ${this.config.serverPort},\n
+            locations: { config: '/config' }\n
+        };\n`
+        );
+        this.appendAll(_.functions(this.functions)
+            .map(f => this.sanitiseFunction('' + this.functions[f], f)));
+        // start diashow show after delay 
+        return this.append(`setTimeout(function() { startShow(); }, ${this.config.showStartDelay});`);
+    </script>
+</head>
+
+</html>

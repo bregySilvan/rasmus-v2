@@ -1,6 +1,5 @@
 import * as request from 'request';
 import { writeFile, createWriteStream } from '../utils/fs-extra';
-import * as imageDownload from 'image-download';
 
 export class Request {
 

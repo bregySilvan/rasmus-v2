@@ -18,6 +18,6 @@
 		- some show settings
 		-installation folder
 	a shortcut to a program start file is created. and stored on desktop
-	
+	the shortcut starts the server and opens the web interface
 	Cheers!
 		

@@ -25,7 +25,7 @@ export class RequestHandler {
     }
 
     public onGetShow(req: express.Request, res: express.Response, next: express.NextFunction) {
-        this.isSuccess(res, next, this.getUI());
+        this.isSuccess(res, next, this.buildDiashowUi());
     }
 
     public onGetPictures(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -39,16 +39,16 @@ export class RequestHandler {
         this.isSuccess(res, next, JSON.stringify(this.config));
     }
 
-    private getUI(): string {
+    private buildDiashowUi(): string {
 
-        return UIBuilder.build(this.config)
+        return UIBuilder.build(this.config, 'diashow')
             .html()
             .head()
             .jsTag()
-            .jsCode()
+            .jsCodeDiashow()
             .jsTag(true)
             .head(true)
-            .fullBody()
+            .bodyDiaShow()
             .html(true)
             .toString();
     }

@@ -5,7 +5,8 @@ export const SERVER_CONFIG: IServerConfig = {
     locations: {
         show: '/show',
         pictures: '/pictures',
-        config: '/config'
+        config: '/config',
+        settings: '/settings'
     },
     serverAddress: ip.address(),
     serverPort: 5001,

@@ -3,7 +3,8 @@ import { IUserConfig } from '../user-config.interface';
 export interface ILocationMap {
     show: '/show';
     pictures: '/pictures';
-    config: '/config'
+    config: '/config';
+    settings: '/settings';
 }
 
 export interface IServerConfig {

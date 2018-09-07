@@ -7,7 +7,7 @@ export class UIBuilder {
     private contents = '';
     private functions = PLAIN_JS_FUNCTIONS_UI;
 
-    static build(config: IConfig): UIBuilder {
+    static build(config: IConfig, target: 'diashow' | 'settings'): UIBuilder {
         return new UIBuilder(config);
     }
 
@@ -19,11 +19,16 @@ export class UIBuilder {
         return this.appendTag('head', isClosingTag);
     }
 
-    fullBody(): UIBuilder {
+    bodyDiaShow(): UIBuilder {
         this.appendTag('body', false);
         this.appendTag('canvas', false, { id: this.config.pictureElementId });
         this.appendTag('canvas', true);
         return this.appendTag('body', true);
+    }
+
+    bodySettings(): UIBuilder {
+
+        return this;
     }
 
     jsTag(isClosingTag: boolean = false): UIBuilder {
@@ -32,7 +37,7 @@ export class UIBuilder {
 
     // this function holds all javascript the client needs on the first request as hardcoded javascript.
     // the client is only responsible for showing pictures and in plain javascript.
-    jsCode(): UIBuilder {
+    jsCodeDiashow(): UIBuilder {
         this.append('var images = [];\n');
         this.append('var currentIndex = 0;\n');
         this.append('var isLoading = false;\n')
@@ -45,6 +50,12 @@ export class UIBuilder {
             .map(f => this.sanitiseFunction('' + this.functions[f], f)));
         // start diashow show after delay 
         return this.append(`setTimeout(function() { startShow(); }, ${this.config.showStartDelay});`);
+    }
+
+    jsCodeSettings(): UIBuilder {
+        
+
+        return this;
     }
 
     toString() {
