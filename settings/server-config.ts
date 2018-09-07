@@ -12,5 +12,6 @@ export const SERVER_CONFIG: IServerConfig = {
     serverPicturesLocation: './pictures',
     pictureElementId: 'picture',
     showStartDelay: 1500,
-    reloadPictureTimeMs: 12 * 1000,
+    reloadPicturesOnClientMs: 10 * 1000,
+    reloadPicturesOnServerMs: 12 * 1000
 };

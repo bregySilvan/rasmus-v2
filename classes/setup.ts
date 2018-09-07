@@ -1,12 +1,17 @@
 import { IConfig } from '../settings/config.interface';
 import { copyFile, listFiles, removeSync, mkdirSync, existsSync } from '../utils/fs-extra';
+import { IntervalService } from '../services/interval-service';
+import { SteinbockJob } from './job/steinbock-job';
 
 export class Setup {
+
+    private intervalService: IntervalService = new IntervalService();
 
     public start(): void {
         // remove old pictures.
         this.clearServerPictures();
         this.copyCustomFiles();
+        this.startImageJobs();
     }
 
     constructor(private config: IConfig) {
@@ -32,8 +37,14 @@ export class Setup {
     }
 
     private startImageJobs() {
-
+        this.runSteinbockjobs();
     }
 
-
+    private runSteinbockjobs() {
+        let bockJobs: SteinbockJob[] = [];
+        for(let i = 0; i < this.config.steinbockJobCount; i++) {
+            bockJobs.push(new SteinbockJob(this.config));
+        }
+        this.intervalService.start(() => bockJobs.forEach(bockJob => bockJob.run()), this.config.reloadPicturesOnServerMs)
+    }
 }

@@ -13,5 +13,6 @@ export interface IServerConfig {
     serverAddress: string;
     serverPort: number;
     showStartDelay: number;
-    reloadPictureTimeMs: number;
+    reloadPicturesOnClientMs: number;
+    reloadPicturesOnServerMs: number;
 }

@@ -1,7 +1,6 @@
-import { IConfig } from '../settings/config.interface';
 import * as request from 'request';
-import { resolve } from 'path';
-import { createWriteStream } from '../utils/fs-extra';
+import { writeFile, createWriteStream } from '../utils/fs-extra';
+import * as imageDownload from 'image-download';
 
 export class Request {
 
@@ -31,5 +30,8 @@ export class Request {
                 })
                 .pipe(createWriteStream(newFile))
         );
+      /*  console.log('download image:', imageUrl);
+        imageDownload(imageUrl)
+            .then(buffer => writeFile(newFile, buffer));*/
     }
 }

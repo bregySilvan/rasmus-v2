@@ -3,5 +3,6 @@ import { IUserConfig } from './user-config.interface';
 
 export const USER_CONFIG: IUserConfig = {
     customPicturesLocation: 'D:/pictures',
-    pictureDisplayTimeMs: 1500
+    pictureDisplayTimeMs: 1500,
+    steinbockJobCount: 4
 };

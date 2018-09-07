@@ -1,27 +1,52 @@
 import { Request } from '../request';
 import { IConfig } from '../../settings/config.interface';
+import { createId } from '../../utils/id';
+import { REG_EXP } from '../../utils/regex';
+import { toDomain } from '../../utils/url';
+import { Cache } from '../cache';
+import { randomElement } from '../../utils/random';
 
 export abstract class Job {
-    abstract extractRelevantContent: (content: string) => string;
-    extractUrls(relevantContent: string): string[] {
-        return [];
+
+    private _id = createId();
+    private imageRegex = REG_EXP.imageTag;
+    protected abstract parseUrls(body: string): string[];
+
+    async run(): Promise<void> {
+        let body: string;
+
+        if(Cache.has(this.url)) {
+            body = Cache.get(this.url);
+        } else {
+            body = await Request.get(this.url);
+            Cache.put(this.url, body);
+        }
+
+        let url = randomElement(this.parseUrls(Cache.get(this.url)));
+        let extension = url.substring(url.lastIndexOf('.'));
+        let newFile = `${this.config.serverPicturesLocation}/${this._id}${extension}`;
+        Request.downloadImage(url, newFile);
+
     }
 
-    run() {
-        Request.get(this.url).then(body => {
-            let relevantContent = this.extractRelevantContent(body);
-            let imageUrls = this.extractUrls(body);
-            imageUrls.forEach(url => Request.downloadImage(url, this.destFile));
-        });
+    protected extractImageTags(body: string): string[] {
+        return body.match(this.imageRegex);
     }
 
-    get destFile() {
-        return `${this.destFolder}/${this.destFile}`;
+    get id(): string {
+        return this._id;
     }
 
-    constructor(private url: string,
-                private destFolder: string,
-                private imageName: string) {
+    get fileExtension(): string {
+        return this.url.substring(this.url.lastIndexOf('.'));
+    }
+
+    get domain(): string {
+        return toDomain(this.url);
+    }
+
+    constructor(private config: IConfig,
+                private url: string) {
 
     }
 }

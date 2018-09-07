@@ -94,7 +94,7 @@ export const PLAIN_JS_FUNCTIONS_UI = {
             config = res;
             console.log('starting dia show');
             loadImages();
-            setInterval(() => loadImages(), config.reloadPictureTimeMs);
+            setInterval(() => loadImages(), config.reloadPicturesOnClientMs);
             setInterval(() => displayNextImage(), config.pictureDisplayTimeMs);
         });
     }
