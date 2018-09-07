@@ -1,6 +1,5 @@
 
 import * as fs from 'fs-extra';
-import { resolve } from 'dns';
 
 export async function copyFile(sourceFile: string, newFile: string): Promise<void> {
     return fs.copy(sourceFile, newFile);

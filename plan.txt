@@ -1,41 +1,23 @@
 
 
 
+
+
+
+		lets add settings and installation
+		
+		
+	- runSettings.cmd, use node binary for starting simple server
+	server provides url for making user settings aswell as it does 
+	for installation
+	- When settings are done, server is telled 2 shutdown after
+	it has written config file. 
+	on the web interface the user selects
+		- picture folder
+		- services (steinbock, other pages..)
+		- some show settings
+		-installation folder
+	a shortcut to a program start file is created. and stored on desktop
 	
-	jobs
-	
-		- create iobject to store jobs
-		
-		-a job takes informatoin and some specific function.
-		A job can be executed. It sends a request to a page and gets its contents.
-		The custom function extracts a picture url. The universal picture crawler holds
-		some functions for extracting imageUrls from img tags. The job specific implementation
-		is responsible for extracting a little part of the whole html page which should contain the img.
-		Cheers:
-		
-		
-		the jobs are managed and started by 'Setup' class
-		Classes::
-		
-		PicCrawler {
-			-IntervalService
-			+startJob(job: Job);
-			
-		}
-		
-		Parser {
-			// extracts all urls within <img> tags and which end with .jpg, .png etc
-			extractImageUrl(): string
-		}
-		
-		Request {
-			get() 
-		}
-		
-		
-		class {
-			url: string;
-			
-		}
-		
+	Cheers!
 		

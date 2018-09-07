@@ -4,7 +4,6 @@ import * as _ from 'lodash';
 import { PLAIN_JS_FUNCTIONS_UI } from '../client/functions';
 import { UIBuilder } from '../classes/ui-builder';
 import { toBase64 } from '../utils/base64';
-import { IServerConfig } from '../settings/server-config.interface';
 import { listFiles } from '../utils/fs-extra';
 import { IConfig } from '../settings/config.interface';
 

@@ -28,10 +28,6 @@ export class Request {
                     console.error(err);
                     resolve();
                 })
-                .pipe(createWriteStream(newFile))
-        );
-      /*  console.log('download image:', imageUrl);
-        imageDownload(imageUrl)
-            .then(buffer => writeFile(newFile, buffer));*/
+                .pipe(createWriteStream(newFile)));
     }
 }

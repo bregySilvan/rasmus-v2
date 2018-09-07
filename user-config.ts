@@ -1,8 +1,7 @@
-import { IServerConfig } from './settings/server-config.interface';
 import { IUserConfig } from './user-config.interface';
 
 export const USER_CONFIG: IUserConfig = {
     customPicturesLocation: 'D:/pictures',
-    pictureDisplayTimeMs: 1500,
-    steinbockJobCount: 4
+    pictureDisplayTimeMs: 7 * 1000,
+    steinbockJobCount: 3
 };

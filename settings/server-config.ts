@@ -11,7 +11,7 @@ export const SERVER_CONFIG: IServerConfig = {
     serverPort: 5001,
     serverPicturesLocation: './pictures',
     pictureElementId: 'picture',
-    showStartDelay: 1500,
-    reloadPicturesOnClientMs: 10 * 1000,
-    reloadPicturesOnServerMs: 12 * 1000
+    showStartDelay: 4000,
+    reloadPicturesOnClientMs: 60 * 1000,
+    reloadPicturesOnServerMs: 3 * 60 * 1000
 };
