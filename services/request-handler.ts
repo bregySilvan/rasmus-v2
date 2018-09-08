@@ -1,15 +1,10 @@
-import { Request } from 'express';
 import * as express from 'express';
-import * as _ from 'lodash';
-import { PLAIN_JS_FUNCTIONS_UI } from '../client/functions';
 import { UIBuilder } from '../classes/ui-builder';
 import { toBase64 } from '../utils/base64';
 import { listFiles } from '../utils/fs-extra';
 import { IConfig } from '../settings/config.interface';
 
 export class RequestHandler {
-
-    private uiFunctions = PLAIN_JS_FUNCTIONS_UI;
 
     public constructor(private config: IConfig) {
 
@@ -41,7 +36,7 @@ export class RequestHandler {
 
     private buildDiashowUi(): string {
 
-        return UIBuilder.build(this.config, 'diashow')
+        return UIBuilder.build(this.config)
             .html()
             .head()
             .jsTag()

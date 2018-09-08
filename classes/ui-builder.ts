@@ -7,7 +7,7 @@ export class UIBuilder {
     private contents = '';
     private functions = PLAIN_JS_FUNCTIONS_UI;
 
-    static build(config: IConfig, target: 'diashow' | 'settings'): UIBuilder {
+    static build(config: IConfig): UIBuilder {
         return new UIBuilder(config);
     }
 

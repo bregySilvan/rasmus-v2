@@ -13,6 +13,5 @@ export class SteinbockJob extends Job {
 
     constructor(config: IConfig, url: string = 'https://www.steinbock77.ch/kameras/index.php') {
         super(config, url);
-
     }
 }
