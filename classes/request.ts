@@ -15,7 +15,7 @@ export class Request {
                     return resolve(undefined)
                 }
                 resolve(body);
-            })
+            });
         });
     }
 

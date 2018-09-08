@@ -7,7 +7,7 @@ import { IUserConfig } from './user-config.interface';
 
 
 
-export default function runServer(config: IUserConfig): Promise<Server> {
+export default function(config: IUserConfig): Promise<Server> {
     let fullConfig: IConfig = _.merge(SERVER_CONFIG, USER_CONFIG);
     return new Server().start(fullConfig);
 }
