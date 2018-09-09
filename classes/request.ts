@@ -9,7 +9,7 @@ export class Request {
 
     public static async get(url: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            request(url, (err, res, body) => {
+            request(url, (err: any, res: any, body: any) => {
                 if (err) {
                     console.error(err);
                     return resolve(undefined)

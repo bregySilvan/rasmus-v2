@@ -5,7 +5,7 @@ import { IConfig } from '../settings/config.interface';
 export class UIBuilder {
 
     private contents = '';
-    private functions = PLAIN_JS_FUNCTIONS_UI;
+    private functions: { [key: string]: Function } = PLAIN_JS_FUNCTIONS_UI;
 
     static build(config: IConfig): UIBuilder {
         return new UIBuilder(config);
