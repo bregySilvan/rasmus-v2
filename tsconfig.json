@@ -9,7 +9,7 @@
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es2015"],
+    "lib": ["es2015", "es2015.core"],
     "sourceMap": true,
     "pretty": true,
     "allowUnreachableCode": false,
@@ -17,6 +17,5 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true
-
   }
 }

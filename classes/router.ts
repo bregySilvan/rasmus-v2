@@ -32,7 +32,6 @@ export class CustomRouter {
     private _addRoute(location: string, method: 'post' | 'get', 
         requestHandlerFn: (req: express.Request, res: express.Response, next: express.NextFunction) => void): void {
 
-            location = location.startsWith('/') ? location : `/${location}`;
             this._activeLocations.push(`${method.toUpperCase()}: ${location}`);
             this._router[method](location, requestHandlerFn.bind(this._requestHandler));
     }
