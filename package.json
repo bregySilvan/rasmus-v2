@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node main.ts"
+    "start": "ts-node index.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "@types/fs-extra": "^5.0.1",
     "@types/ip": "0.0.31",
     "@types/lodash": "^4.14.106",
+    "@types/pluralize": "0.0.29",
     "@types/request": "^2.47.1",
     "base64-img": "^1.0.4",
     "chalk": "^2.3.2",
@@ -35,6 +36,7 @@
     "fs-extra": "^5.0.0",
     "ip": "^1.1.5",
     "lodash": "^4.17.5",
+    "pluralize": "^7.0.0",
     "request": "^2.88.0",
     "window": "^4.2.5"
   }
